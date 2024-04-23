@@ -1,0 +1,11 @@
+# Ignore the venv folder
+venv/
+
+# Ignore the apikey file
+apikey
+settings
+action
+Windows Groq Assistant.lnk
+# Ignore the settings.py file
+
+stt.py
