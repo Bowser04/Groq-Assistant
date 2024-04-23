@@ -24,10 +24,10 @@ The application provides a simple and intuitive interface.
 
 **Installation**
 -------------------
-1.Download last release : [https://github.com/Bowser04/Grok-Assistant/releases](https://github.com/Bowser04/Grok-Assistant/releases)
-2.extract it whatever you want
-3.start setup.bat
-4.launch Windows Groq Assistant in your start menu
+1. Download last release : [https://github.com/Bowser04/Grok-Assistant/releases](https://github.com/Bowser04/Grok-Assistant/releases)
+2. extract it whatever you want
+3. start setup.bat
+4. launch Windows Groq Assistant in your start menu
 
 
 **Usage**
