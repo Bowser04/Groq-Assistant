@@ -24,7 +24,7 @@ The application provides a simple and intuitive interface.
 
 **Installation**
 -------------------
-1.Download last ... : ...
+1.Download last release : [https://github.com/Bowser04/Grok-Assistant/releases](https://github.com/Bowser04/Grok-Assistant/releases)
 2.extract it whatever you want
 3.start setup.bat
 4.launch Windows Groq Assistant in your start menu
@@ -33,10 +33,11 @@ The application provides a simple and intuitive interface.
 **Usage**
 -----
 
-1. Launch the application and press ctrl+alt+g to open gui.
-2. Select wanted action (respond,resume,fix...).
-3. Click the "Generate" button to receive a response from the AI model.
-4. Customize your settings by clicking the "Settings" button.
+1. Launch the application
+2. select your text and press ctrl+alt+g to open gui.
+3. Select wanted action (respond,resume,fix...).
+4. Click the "Generate" button to receive a response from the AI model.
+5. Customize your settings by clicking the "Settings" button.
 
 **Troubleshooting**
 -------------------
