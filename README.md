@@ -15,7 +15,7 @@ The application provides a simple and intuitive interface.
 * Customizable settings for writing and clipboard behavior
 * Custom prompt can be added
 * Simple and intuitive interface
-* Hashed api key with password 
+* Hashed API key with password
 
 **Prerequisites**
 -------------------
