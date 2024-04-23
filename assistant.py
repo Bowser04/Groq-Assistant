@@ -100,7 +100,7 @@ languages = [
     "Yoruba",
     "Zulu",
 ]
-
+models=["llama3-8b-8192","llama3-70b-8192","llama2-70b-4096", "mixtral-8x7b-32768", "gemma-7b-it"]
 stop = False
 def quit(systray):
     os.kill(os.getpid(), signal.SIGTERM)
@@ -117,7 +117,8 @@ if not os.path.exists("settings"):
     tmp = open("settings","+w")
     tmp.write("""write::off
 clipboard::on
-language::english""")
+language::english
+model::llama3-70b-8192""")
     tmp.close()
 api_key_encripted = open("apikey","r").read()
 decripted_api_key = False
@@ -215,6 +216,7 @@ def generate_event():
         app.mainloop()
         app.destroy()
     print("Generate")
+    print(settings["model"])
     chat_completion = client.chat.completions.create(
     messages=[
         {
@@ -222,7 +224,7 @@ def generate_event():
             "content": f"{action[actual_choice]}{pyperclip.paste()}",
         }
     ],
-    model="llama3-70b-8192",
+    model=settings["model"],
     )
     if settings["clipboard"] == "on":
         pyperclip.copy(chat_completion.choices[0].message.content)
@@ -270,12 +272,17 @@ def settings_event():
     settings_checkbox["clipboard"] = customtkinter.StringVar(value=settings["clipboard"])
     clipboard = customtkinter.CTkCheckBox(app, text="copy response to the clipboard",
                                      variable=settings_checkbox["clipboard"], onvalue="on", offvalue="off")
-    clipboard.place(relx=0.05, rely=0.16, anchor=customtkinter.W)
-    optionmenu = customtkinter.CTkOptionMenu(app, values=languages)
-    optionmenu.set(settings["language"])
-    optionmenu.place(relx=0.05, rely=0.22, anchor=customtkinter.W)
+    clipboard.place(relx=0.05, rely=0.18, anchor=customtkinter.W)
+    optionmenu_lang = customtkinter.CTkOptionMenu(app, values=languages)
+    optionmenu_lang.set(settings["language"])
+    optionmenu_lang.place(relx=0.05, rely=0.26, anchor=customtkinter.W)
+
+    optionmenu_model = customtkinter.CTkOptionMenu(app, values=models)
+    optionmenu_model.set(settings["model"])
+    optionmenu_model.place(relx=0.05, rely=0.34, anchor=customtkinter.W)
     app.mainloop()
-    settings["language"] = optionmenu.get()
+    settings["language"] = optionmenu_lang.get()
+    settings["model"] = optionmenu_model.get()
     save_settings(settings_checkbox)
     wait_key()
     start_ui()

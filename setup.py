@@ -15,14 +15,4 @@ script_file = " install -r requirement.txt"
 print("install requirement ...")
 os.system(pip_bin+script_file)
 os.system(python_bin+" hash_key.py")
-tmp = open("action","+w")
-tmp.write("""resume::resume the folowing text in {language}
-respond::respond to the folowing message in {language}
-fix::fix the folowing error in {language}""")
-tmp.close()
-tmp = open("settings","+w")
-tmp.write("""write::off
-clipboard::on
-language::english""")
-tmp.close()
 os.system(python_bin+" install.py")
