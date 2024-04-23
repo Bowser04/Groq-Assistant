@@ -14,7 +14,7 @@ os.system(python_bin+" --version")
 script_file = " install -r requirement.txt"
 print("install requirement ...")
 os.system(pip_bin+script_file)
-open("apikey","w+").write(input("groq api key (https://console.groq.com/keys) : "))
+os.system(python_bin+" hash_key.py")
 tmp = open("action","+w")
 tmp.write("""resume::resume the folowing text in {language}
 respond::respond to the folowing message in {language}

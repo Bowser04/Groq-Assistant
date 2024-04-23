@@ -2,7 +2,7 @@
 #from pyshortcuts import make_shortcut
 
 #make_shortcut('assistant.py', name='Windows Groq Assistant', icon='icon.ico')
-import os, winshell
+import os
 from win32com.client import Dispatch
 import pathlib
 

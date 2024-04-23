@@ -7,6 +7,7 @@ import pyperclip
 from infi.systray import SysTrayIcon
 import sys
 import signal
+client = None
 languages = [
     "Afrikaans",
     "Albanian",
@@ -106,8 +107,6 @@ def quit(systray):
     os.kill(os.getppid(), signal.SIGTERM)
 systray = SysTrayIcon("icon.ico", "Example tray icon",on_quit=quit)
 systray.start()
-if not os.path.exists("apikey"):
-    open("apikey","w+").write(input("groq api key (https://console.groq.com/keys) : "))
 if not os.path.exists("action"):
     tmp = open("action","+w")
     tmp.write("""resume::resume the folowing text in {language}
@@ -120,9 +119,8 @@ if not os.path.exists("settings"):
 clipboard::on
 language::english""")
     tmp.close()
-client = Groq(
-    api_key=open("apikey","r").read(),
-)
+api_key_encripted = open("apikey","r").read()
+decripted_api_key = False
 app = None
 settings = {}
 settings_checkbox = {}
@@ -174,10 +172,49 @@ def generate_event():
     global app
     global actual_choice
     global action
-    global settings
-    print("Generate")
+    global settings,decripted_api_key
     app.destroy()
     app = None
+    if not decripted_api_key:
+        def continue_password():
+            global api_key_encripted
+            from cryptography.fernet import Fernet
+            import base64
+            import os
+            import hashlib
+            print(textbox.get("0.0","end").replace("\n",""))
+            # Generate a key from the password
+            password_key = hashlib.sha256(textbox.get("0.0","end").replace("\n","").encode()).digest()
+            key = base64.urlsafe_b64encode(password_key)
+
+            # Create a Fernet instance with the key
+            f = Fernet(key)
+
+            # Read the encrypted API key from the file
+
+            try:
+                global decripted_api_key,client,app
+                # Decrypt the API key
+                client = Groq(api_key=f.decrypt(api_key_encripted).decode())
+                decripted_api_key = True
+                app.destroy()
+            except Exception as e:
+                print("Nope", str(e))
+        customtkinter.set_appearance_mode("dark")  # Modes: system (default), light, dark
+        customtkinter.set_default_color_theme("dark-blue")  # Themes: blue (default), dark-blue, green
+        app = customtkinter.CTk()  # create CTk window like you do with the Tk window
+        app.geometry("150x100")
+        app.resizable(False,False)
+        app.title("Groq Assistant")
+        text = customtkinter.CTkLabel(app,text="enter you password")
+        text.place(relx=0.15, rely=0.3, anchor=customtkinter.W)
+        textbox = customtkinter.CTkTextbox(master=app, width=150,height=40, corner_radius=0)
+        textbox.place(relx=0, rely=0.7, anchor=customtkinter.W)
+        button = customtkinter.CTkButton(app,150,20,text="continue",command=continue_password)
+        button.place(relx=0, rely=0.9, anchor=customtkinter.W)
+        app.mainloop()
+        app.destroy()
+    print("Generate")
     chat_completion = client.chat.completions.create(
     messages=[
         {
