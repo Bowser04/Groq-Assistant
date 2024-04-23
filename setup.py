@@ -26,5 +26,3 @@ clipboard::on
 language::english""")
 tmp.close()
 os.system(python_bin+" install.py")
-if not input("start Windows Groq Assistant ? ([y]/n): ") == "n":
-    subprocess.Popen([python_bin,"assistant.py"])
