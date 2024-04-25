@@ -140,7 +140,7 @@ for i in range(len(action_txt.split("\n"))):
      if action_txt.split("\n")[i] != "":
         temp = action_txt.split("\n")[i]
         temp_lst = temp.split("::")
-        action[temp_lst[0]] = temp_lst[1].replace("{language}",language)+" : \n"
+        action[temp_lst[0]] = temp_lst[1].replace("{language}",language).replace("\xa0","\n")+" : \n"
 print(action)
 actual_choice = list(action.keys())[0]
 def optionmenu_callback(choice):
@@ -252,7 +252,7 @@ def add_prompt():
         if action_txt.split("\n")[i] != "":
             temp = action_txt.split("\n")[i]
             temp_lst = temp.split("::")
-            action[temp_lst[0]] = temp_lst[1].replace("{language}",language)+" : \n"
+            action[temp_lst[0]] = temp_lst[1].replace("{language}",language).replace("\xa0","\n")+" : \n"
     print(action)
     actual_choice = list(action.keys())[0]
     app.destroy()
@@ -287,8 +287,8 @@ def settings_event():
     optionmenu_model = customtkinter.CTkOptionMenu(app, values=models)
     optionmenu_model.set(settings["model"])
     optionmenu_model.place(relx=0.05, rely=0.34, anchor=customtkinter.W)
-    add_prompt = customtkinter.CTkButton(app, text="Add prompt", command=add_prompt_event,width=28,height=8)
-    add_prompt.place(relx=0.9, rely=0.08, anchor=customtkinter.W)
+    add_prompt = customtkinter.CTkButton(app, text="Add prompt", command=add_prompt_event,width=150,height=50)
+    add_prompt.place(relx=0.05, rely=0.80, anchor=customtkinter.W)
 
     app.mainloop()
     settings["language"] = optionmenu_lang.get()
